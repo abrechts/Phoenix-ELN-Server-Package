@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `tblUsers` (
   `PWHint` text DEFAULT NULL,
   `IsSpellCheckEnabled` tinyint(4) NOT NULL,
   `IsCurrent` tinyint(4) DEFAULT 0,
-  'SequenceNr' smallint(6) DEFAULT 0,
+  `SequenceNr` smallint(6) DEFAULT 0,
   `SyncState` tinyint(4) DEFAULT 0,
   PRIMARY KEY (`UserID`),
   KEY `IX_tblUsers_DatabaseID` (`DatabaseID`),
