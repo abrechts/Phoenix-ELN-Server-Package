@@ -3,7 +3,7 @@
 This script creates a new Phoenix ELN server database for MariaDB or MySQL.
 -------------------------------------------------------------------------------------------
 
-Version 1.3
+Version 1.4
 -----------
 
 Create a login User
@@ -263,6 +263,18 @@ CREATE TABLE IF NOT EXISTS `tblRefReactants` (
   PRIMARY KEY (`GUID`),
   UNIQUE KEY `unq_tblRefReactants` (`ProtocolItemID`),
   CONSTRAINT `FK_tblRefReactants_tblProtocolItems_ProtocolItemID` FOREIGN KEY (`ProtocolItemID`) REFERENCES `tblProtocolItems` (`GUID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tblSearchIndex` (
+  `ProtocolItemID` varchar(36) NOT NULL,
+  `ExperimentID` varchar(25) NOT NULL,
+  `Content` text NOT NULL,
+  `SyncState` tinyint(4) DEFAULT 0,
+  PRIMARY KEY (`ProtocolItemID`),
+  KEY `idx_tblSearchIndex_ExperimentID` (`ExperimentID`),
+  FULLTEXT KEY `ft_tblSearchIndex_Content` (`Content`),
+  CONSTRAINT `FK_tblSearchIndex_tblProtocolItems_ProtocolItemID` FOREIGN KEY (`ProtocolItemID`) REFERENCES `tblProtocolItems` (`GUID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
