@@ -3,7 +3,7 @@
 This script creates a new Phoenix ELN server database for MariaDB or MySQL.
 -------------------------------------------------------------------------------------------
 
-Version 1.4
+Version 1.5
 -----------
 
 Create a login User
@@ -136,6 +136,19 @@ CREATE TABLE IF NOT EXISTS `tblExperiments` (
   CONSTRAINT `FK_tblExperiments_tblProjects_ProjectID` FOREIGN KEY (`ProjectID`) REFERENCES `tblProjects` (`GUID`) ON DELETE CASCADE,
   CONSTRAINT `FK_tblExperiments_tblUsers_UserID` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`) ON DELETE CASCADE,
   CONSTRAINT `tblExperiments_ibfk_1` FOREIGN KEY (`ProjFolderID`) REFERENCES `tblProjFolders` (`GUID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tblExperimentTags` (
+  `GUID` varchar(36) NOT NULL,
+  `ExperimentID` varchar(25) NOT NULL,
+  `TagID` varchar(36) NOT NULL,
+  `SyncState` tinyint(4) DEFAULT 0,
+  PRIMARY KEY (`GUID`),
+  UNIQUE KEY `unq_tblExperimentTags` (`ExperimentID`,`TagID`),
+  KEY `idx_tblExperimentTags_TagID` (`TagID`),
+  CONSTRAINT `FK_tblExperimentTags_tblExperiments_ExperimentID` FOREIGN KEY (`ExperimentID`) REFERENCES `tblExperiments` (`ExperimentID`) ON DELETE CASCADE,
+  CONSTRAINT `FK_tblExperimentTags_tblTags_TagID` FOREIGN KEY (`TagID`) REFERENCES `tblTags` (`GUID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -306,6 +319,17 @@ CREATE TABLE IF NOT EXISTS `tblSolvents` (
   PRIMARY KEY (`GUID`),
   UNIQUE KEY `idx_tblSolvents` (`ProtocolItemID`),
   CONSTRAINT `FK_tblSolvents_tblProtocolItems_ProtocolItemID` FOREIGN KEY (`ProtocolItemID`) REFERENCES `tblProtocolItems` (`GUID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tblTags` (
+  `GUID` varchar(36) NOT NULL,
+  `DatabaseID` varchar(36) NOT NULL,
+  `TagName` varchar(50) NOT NULL,
+  `SyncState` tinyint(4) DEFAULT 0,
+  PRIMARY KEY (`GUID`),
+  UNIQUE KEY `unq_tblTags_DatabaseID_TagName` (`DatabaseID`,`TagName`),
+  CONSTRAINT `FK_tblTags_tblDatabaseInfo_DatabaseID` FOREIGN KEY (`DatabaseID`) REFERENCES `tblDatabaseInfo` (`GUID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
