@@ -9,9 +9,9 @@ Version 1.5
 Create a login User
 '-------------------'
 In your database tool, please manually create a new database user account for Phoenix ELN.
-* The username is of your own choice, e.g. 'PhoenixUser'
-* The password is of your own choice.
-Username and password are the same for all Phoenix ELN users connecting to this database.
+* The username is of your own choice, e.g.'PhoenixUser'
+* The passoword is of your own choice.
+Username and password are the same for all Phoenix ELN users connecting to the database.
 This user must be granted at least following privileges: SELECT, ALTER, CREATE, INSERT, DELETE, UPDATE, SUPER.
 */
 
@@ -60,14 +60,6 @@ CREATE TABLE IF NOT EXISTS `tblComments` (
   CONSTRAINT `FK_tblComments_tblProtocolItems_ProtocolItemID` FOREIGN KEY (`ProtocolItemID`) REFERENCES `tblProtocolItems` (`GUID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-CREATE TABLE IF NOT EXISTS `tblArchiveConfig` (
-  `ConfigID` tinyint(4) NOT NULL,
-  `ArchiveRoot` varchar(260) DEFAULT NULL,
-  `SetAt` datetime DEFAULT NULL,
-  `SetBy` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`ConfigID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tblDatabaseInfo` (
   `GUID` varchar(36) NOT NULL,
@@ -132,9 +124,6 @@ CREATE TABLE IF NOT EXISTS `tblExperiments` (
   `RefYieldFactor` double NOT NULL DEFAULT 1,
   `CreationDate` varchar(20) DEFAULT NULL,
   `FinalizeDate` varchar(20) DEFAULT NULL,
-  `FinalizeCount` int(11) DEFAULT 0,
-  `ArchivedVersion` int(11) DEFAULT NULL,
-  `ArchiveClaimedAt` datetime DEFAULT NULL,
   `DisplayIndex` smallint(6) DEFAULT NULL,
   `IsNodeExpanded` tinyint(4) DEFAULT 0,
   `RxnIndigoObj` longblob DEFAULT NULL,
